@@ -12,6 +12,7 @@ de que el campo required falle.
 
 $errores = [];
 
+
 function validaNombre($nombre)
 {
     global $errores;
@@ -30,7 +31,16 @@ function validaEdad($edad)
 
 function validaEmail($email)
 {
-    (is_int($email)) ? filter_var($email, FILTER_VALIDATE_EMAIL) : array_push($errores, "Email no tiene un formato valido");
+    global $errores;
+    !filter_var($email, FILTER_VALIDATE_EMAIL) ?  array_push($errores, "Email no tiene un formato valido") : "todo bien";
+};
+
+function validaPass($pass)
+{
+    global $errores;
+    if (strlen($pass) < 5 || strlen($pass) > 15) {
+        array_push($errores, "La contraseña debe contener entre 5 a 15 caracteres");
+    };
 };
 
 (empty($_POST['name'] == false)) ?
@@ -49,35 +59,34 @@ function validaEmail($email)
     validaEdad($_POST['edad']) :
     array_push($errores, 'Edad vacia');
 
+(empty($_POST['email'] == false)) ?
+    validaEmail($_POST['email']) :
+    array_push($errores, 'Email vacio o no válido');
 
-var_dump($errores);
-// if (
-//     // !empty($_POST['edad'])
-//     // ||
-//     // !empty($_POST['email'])
-//     // ||
-//     // !empty($_POST['pass'])
-//     ) {
-//     $apellidop = $_POST['apellidop'];
-//     $apellidom = $_POST['apellidom'];
-//     $edad = $_POST['edad'];
-//     $email = $_POST['email'];
-//     $pass = $_POST['pass'];
-// } else {
-//     header("Location:index.php?error=$errores");
-// };
+(empty($_POST['pass'] == false)) ?
+    validaPass($_POST['pass']) :
+    array_push($errores, 'La contraseña  no tiene el formato requerido');
 
+
+
+if (count($errores) > 0) {
+    $error = implode(',', $errores);
+    header("Location:index.php?errores=$error");
+} else {
+    echo "<h1>" . "Toda la información a sido correcta" . "<h1>";
+};
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
-<header>
+
+<head>
     <meta charset="uft-8">
     <title> Recepcion de formulario</title>
-</header>
+</head>
 
 <body>
-
+    <h1>Hola</h1>
 </body>
 
 </html>

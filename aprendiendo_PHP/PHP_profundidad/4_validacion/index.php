@@ -11,11 +11,10 @@
     <h1>Validar formulario en PHP </h1>
 
     <?php
-    if (isset($_GET['error'])) {
-        $error = $_GET['error'];
-        if ($error == 'faltan_valores') {
-            echo '<h1 style="color:red">Algunos datos del formulario no fueron llenados correctamente </h1>';
-        }
+    if (isset($_GET['errores'])) {
+        $errores = $_GET['errores'];
+        $errores = explode(',', $errores);
+        var_dump($errores);
     }
     ?>
     <form method="POST" action="procesar_formulario.php">
@@ -25,11 +24,11 @@
         </div>
         <div>
             <label for="apellidop">Apellido Paterno: </label>
-            <input type="text" name="apellidop" required="required" >
+            <input type="text" name="apellidop" required="required">
         </div>
         <div>
             <label for="apellidom">Apellido Materno: </label>
-            <input type="text" name="apellidom" required="required" >
+            <input type="text" name="apellidom" required="required">
         </div>
         <div>
             <label for="edad">Edad: </label>
