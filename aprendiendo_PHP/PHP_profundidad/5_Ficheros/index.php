@@ -2,10 +2,10 @@
 
 /* Archivos o Ficheros
     Vamos a aprender a :
-        * Abrir
-        * Leer
-        * Escribir
-        * Cerrar 
+        * Abrir    = fopen('nombre_Archivo.extension', permisos)
+        * Leer     = fgets($nombre_Archivo)
+        * Escribir = fwrite()
+        * Cerrar   = fclose
     Los archivos o ficheros 
     
     Primero abrimos el archivo con la funcion fopen("Nombre_archivo", "modo de apertura");
@@ -36,11 +36,33 @@ echo $contenidolin . "</br>";
 // Si mi archivo tiene más de una línea escrita debemos meter todo en un ciclo para leerlo todo y como 
 // condicion del ciclo colocar la función feof("archivo_abierto").
 // feor()= (file endo of file)  nos dice mediante un booleanosi ya llegamos al final del arhcivo .
-echo "<h1> Lectura completa del archivo </h1>";
+echo "<h1> Lectura completa del archivo con ciclo While</h1>";
 while (!feof($archivo)) {
     $contenidoc = fgets($archivo);
     echo $contenidoc . "</br>";
 };
+
+// //Si quieres obtener varias líneas o alguna porción de estas, puedes emplear la función fread
+echo "<h1> Lectura de las primeras 4 lineas del archivo con fread()</h1>";
+$lineas = fopen("texto_Prueba.txt", "a+");
+if ($lineas) {
+    // lee todo el archivo utilizando el "filesize"
+    // $content = fread($lineas, filesize("texto_Prueba.txt"));
+    // lee la cantidad de carcteres que coloquemos 
+    $content = fread($lineas, 411);
+    fclose($lineas);
+    echo $content;
+} else {
+    echo "Error al abrir archivo";
+};
+
+
+
+// Si quieres obtener el contenido entero de un archivo de una sola atacada, puedes emplear la función file_get_contents().
+echo "<h1> Lectura completa del archivo con file_get_contents()</h1>";
+echo file_get_contents("texto_Prueba.txt");
+
+
 
 //ESCRIBIMOS EN EL ARCHIVO
 // verificamos antes de escribir que nuestro modo de apertura nos permita poder escribir.
