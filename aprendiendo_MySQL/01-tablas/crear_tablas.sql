@@ -33,10 +33,32 @@ debemos olvidar utilizar la CONSTRAINT para asignar dicho campo como Primary Key
 */
 
 CREATE TABLE usuarios (
-    id int(10) auto_increment not null,
+    id int(255) auto_increment not null,
     nombre varchar(20) not null,
     apellidos varchar(50) default 'Martínez',
     email varchar(40) not null,
     passwor varchar(30),
-    CONSTRAINT pk_usuarios PRIMARY KEY (id)
-);
+    CONSTRAINT pk_usuarios PRIMARY KEY (id),
+    CONSTRAINT uq_email UNIQUE (email)
+) ENGINE = InnoDb;
+
+CREATE TABLE categorias (
+    id int(255) AUTO_INCREMENT NOT NULL,
+    nombre varchar(255) NOT NULL,
+    CONSTRAINT pk_categorias PRIMARY KEY (id)
+) ENGINE = InnoDb;
+
+CREATE TABLE entradas (
+    id int(255) AUTO_INCREMENT NOT NULL,
+    usuario_id int(255) not null,
+    categoria_id int(255) not null,
+    titulo VARCHAR(255) not null,
+    descripcion MEDIUMTEXT,
+    fecha DATE NOT NULL,
+    CONSTRAINT pk_entrads PRIMARY KEY (id),
+    CONSTRAINT fk_entrada_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios (id),
+    CONSTRAINT fk_entrada_categoria FOREIGN KEY (categoria_id) REFERENCES categoria (id)
+) ENGINE = InnoDb;
+
+SHOW TABLES;
+DESCRIBE entradas;
